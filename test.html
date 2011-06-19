@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>HTML 5 complete</title>
+<!--[if IE]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+
+<![endif]-->
+<style>
+  article, aside, dialog, figure, footer, header,
+  hgroup, menu, nav, section { display: block; }
+</style>
+</head>
+<body>
+<h1>Js-validator test</h1>
+<h2>Content</h2>
+<p> execute this codes </p>
+<pre>
+<code>
+(function() {
+	var results = [],
+		result_div = document.getElementById('ResultSpace'),
+		test = (function() {
+			var times  = 1;
+			
+			return function(test, result) {
+				if (test !== result) {
+					results.push('Failure @ ' + times);
+				} else {
+					results.push('Success @ ' + times);
+				}
+				times++;
+			}
+		}()),
+		display = function() {
+			var i = 0, html = '';
+			html += '&lt;ul&gt;';
+			for (i in results) {
+				html += '&lt;li&gt;' + results[i] + '&lt;/li&gt;';
+			}
+			html += '&lt;/ul&gt;';
+			
+			result_div.innerHTML = html;
+		},
+		validator = jsValidator(), // create validator object
+		int_val = 1, // Integer
+		str_val = 'hogehoge', // String
+		date_val = '2011-05-01 12:13:16', // DateTime
+		ip_str = '192.168.11.1', // ip address
+		email = 'hogehoge@example.com'; // email
+	
+	test(validator.exec(int_val, ['notempty']), true); // true
+	test(validator.exec(int_val, ['numeric']), true); // true
+	test(validator.exec(int_val, ['numeric', ['between', 3, 5]]), false); // false, because int_val equals 1 < 3
+	test(validator.exec(str_val, ['notempty', 'numeric']), false); // false, because the type of str_val is not integer.
+	test(validator.exec(str_val, [['strlength', 6]]), false); // false, because str_val is longer than 6 character.
+	test(validator.exec(date_val, ['datetime']), true); // true
+	test(validator.exec(ip_str, ['ip_addr']), true); // true
+	test(validator.exec(email, ['email']), true); // true
+	
+	display();
+	
+}());
+</code>
+</pre>
+
+<h2>Result</h2>
+<div id="ResultSpace"></div>
+<script src="src/js-validator.js"></script>
+<script>
+//<![CDATA[
+/** validator test */
+(function() {
+	var results = [],
+		result_div = document.getElementById('ResultSpace'),
+		test = (function() {
+			var times  = 1;
+			
+			return function(test, result) {
+				if (test !== result) {
+					results.push('Failure @ ' + times);
+				} else {
+					results.push('Success @ ' + times);
+				}
+				times++;
+			}
+		}()),
+		display = function() {
+			var i = 0, html = '';
+			html += '<ul>';
+			for (i in results) {
+				html += '<li>' + results[i] + '</li>';
+			}
+			html += '</ul>';
+			
+			result_div.innerHTML = html;
+		},
+		validator = jsValidator(), // create validator object
+		int_val = 1, // Integer
+		str_val = 'hogehoge', // String
+		date_val = '2011-05-01 12:13:16', // DateTime
+		ip_str = '192.168.11.1', // ip address
+		email = 'hogehoge@example.com'; // email
+	
+	test(validator.exec(int_val, ['notempty']), true); // true
+	test(validator.exec(int_val, ['numeric']), true); // true
+	test(validator.exec(int_val, ['numeric', ['between', 3, 5]]), false); // false, because int_val equals 1 < 3
+	test(validator.exec(str_val, ['notempty', 'numeric']), false); // false, because the type of str_val is not integer.
+	test(validator.exec(str_val, [['strlength', 6]]), false); // false, because str_val is longer than 6 character.
+	test(validator.exec(date_val, ['datetime']), true); // true
+	test(validator.exec(ip_str, ['ip_addr']), true); // true
+	test(validator.exec(email, ['email']), true); // true
+	
+	display();
+	
+}());
+//]]>
+</script>
+</body>
+</html>
