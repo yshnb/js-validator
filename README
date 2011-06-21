@@ -1,2 +1,6 @@
 This module is a support for validation.
 If you add a rule in the validation, you can add it by the callback function.
+
+INSTALLATION
+
+If you use this module, copy src/js-validator.js to your server, and import from the script/html.
